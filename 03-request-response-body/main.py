@@ -27,6 +27,7 @@ class Person(BaseModel):
     age: int = Field(..., gt=0, le=100)
     hair_color: Optional[HairColor] = Field(default=None)
     is_married: Optional[bool] = Field(default=None)
+    password: str = Field(..., min_length=8)
 
     class Config:
         schema_extra = {
@@ -35,7 +36,8 @@ class Person(BaseModel):
                 "last_name": "Quispe",
                 "age": 30,
                 "hair_color": "black",
-                "is_married": False
+                "is_married": False,
+                "password": "soyunpassword"
             }
         }
 
@@ -62,7 +64,7 @@ def home():
 
 # Request and Response Body
 
-@app.post("/person/new")
+@app.post("/person/new", response_model=Person, response_model_exclude={'password'})
 def create_person(person: Person = Body(...)):
     return person
 
