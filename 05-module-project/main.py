@@ -77,14 +77,14 @@ def home():
 
 # Request and Response Body
 
-@app.post(path="/person/new", response_model=PersonOut, status_code=status.HTTP_201_CREATED)
+@app.post(path="/person/new", response_model=PersonOut, status_code=status.HTTP_201_CREATED, tags=["Persons"])
 def create_person(person: Person = Body(...)):
     return person
 
 
 # Validaciones: Query Parameters
 
-@app.get(path="/person/detail", status_code=status.HTTP_200_OK)
+@app.get(path="/person/detail", status_code=status.HTTP_200_OK, tags=["Persons"])
 def show_person(
     name: Optional[str] = Query(None, min_length=1, max_length=50, example="Rocío"),
     age: str = Query(..., example=25)
@@ -96,7 +96,7 @@ def show_person(
 persons = [1, 2, 3, 4, 5]
 
 
-@app.get(path="/person/detail/{person_id}", status_code=status.HTTP_200_OK)
+@app.get(path="/person/detail/{person_id}", status_code=status.HTTP_200_OK, tags=["Persons"])
 def show_person(person_id: int = Path(..., gt=0, example=1)):
     if person_id not in persons:
         raise HTTPException(
@@ -108,7 +108,7 @@ def show_person(person_id: int = Path(..., gt=0, example=1)):
 
 # Validaciones: Request Body
 
-@app.put(path="/person/detail/{person_id}", status_code=status.HTTP_200_OK)
+@app.put(path="/person/detail/{person_id}", status_code=status.HTTP_200_OK, tags=["Persons"])
 def update_person(
     person_id: int = Path(..., gt=0, example=123),
     person: Person = Body(...),
@@ -120,7 +120,7 @@ def update_person(
 
 
 # Form
-@app.post(path="/login", response_model=LoginOut, status_code=status.HTTP_200_OK)
+@app.post(path="/login", response_model=LoginOut, status_code=status.HTTP_200_OK, tags=["Persons"])
 def login(username: str = Form(...), password: str = Form(...)):
     return LoginOut(username=username)
 
