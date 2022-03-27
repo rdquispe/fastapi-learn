@@ -70,7 +70,7 @@ class Location(BaseModel):
     #     }
 
 
-@app.get(path="/", status_code=status.HTTP_200_OK)
+@app.get(path="/", status_code=status.HTTP_200_OK, tags=["Home"])
 def home():
     return {"Hello": "Rodrigo"}
 
@@ -127,7 +127,7 @@ def login(username: str = Form(...), password: str = Form(...)):
 
 # Cookies and Headers Parameters
 
-@app.post(path="/contact", status_code=status.HTTP_200_OK)
+@app.post(path="/contact", status_code=status.HTTP_200_OK, tags=["Contact"])
 def contact(
     first_name: str = Form(
         ...,
@@ -152,7 +152,7 @@ def contact(
 
 # Files
 
-@app.post(path="/post-image")
+@app.post(path="/post-image", tags=["Post Image"])
 def post_image(
     image: UploadFile = File(...)
 ):
