@@ -44,6 +44,14 @@ class User(UserBase):
     birth_date: Optional[date] = Field(default=None)
 
 
+class UserRegister(User):
+    password: str = Field(
+        ...,
+        min_length=8,
+        max_length=64
+    )
+
+
 class Tweet(BaseModel):
     tweet_id: UUID = Field(...)
     content: str = Field(
@@ -52,13 +60,8 @@ class Tweet(BaseModel):
         max_length=256
     )
     created_at: datetime = Field(default=datetime.now())
-    updated_at: Optional[datetime] = Field(default=None)
+    update_at: Optional[datetime] = Field(default=None)
     by: User = Field(...)
-
-
-@app.get(path="/", status_code=status.HTTP_200_OK, tags=["Home"])
-def home():
-    return {"twitter_api": "on"}
 
 
 # Path Operations
@@ -74,7 +77,20 @@ def home():
     tags=["Users"]
 )
 def signup():
-    pass
+    """
+    Signup
+    This path operation register a user in the app
+    Parameters:
+        - Request body parameter
+            - user: UserRegister
+
+    Returns a json with the basic user information:
+        - user_id: UUID
+        - email: Emailstr
+        - first_name: str
+        - last_name: str
+        - birth_date: str
+    """
 
 
 ### Login a user
